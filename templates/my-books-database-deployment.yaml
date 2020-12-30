@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-books-database
+  name: my-books-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-books-database
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        backend-network: "true"
+        app: my-books-database
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: mybooksdb
+            - name: MYSQL_PASSWORD
+              value: aamv
+            - name: MYSQL_ROOT_PASSWORD
+              value: aamv
+            - name: MYSQL_USER
+              value: aamv
+          image: mysql:latest
+          name: my-books-database
+          ports:
+            - containerPort: 3306
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: my-db
+      restartPolicy: Always
+      volumes:
+        - name: my-db
+          persistentVolumeClaim:
+            claimName: my-db
+status: {}

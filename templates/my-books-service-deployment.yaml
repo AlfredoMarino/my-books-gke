@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-books-service
+  name: my-books-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-books-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        backend-network: "true"
+        app: my-books-service
+    spec:
+      containers:
+        - env:
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: aamv
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://my-books-database:3306/mybooksdb
+            - name: SPRING_DATASOURCE_USERNAME
+              value: aamv
+          image: aamv/my-books-service:latest
+          name: my-books-service
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+            - mountPath: /data/spring-boot-app
+              name: my-books-service-claim0
+      restartPolicy: Always
+      volumes:
+        - name: my-books-service-claim0
+          persistentVolumeClaim:
+            claimName: my-books-service-claim0
+status: {}
