@@ -1,27 +1,23 @@
 # My books in Kubernetes
 
 
-## To Run
+## To run on your kubernetes cluster
 
-1. In KinD folder recreate a cluster
-2. Run
+1. Run
 
         kubectl apply -f templates/
 
-3. test
+2. Test
 
-    UI
+    **my-books-ui**
 
         curl localhost:30000
 
-    Service
+    **my-books-service**
 
-        curl localhost:31000
+        curl http://localhost:31000/my-books-service/api/v1/search?name=Rayuela
 
 
-#### TODO
+## Note
 
-+ Service:
-    + recibir el puerto dentro del rango 30000 - 32000
-+ UI:
-    + Recibir y apuntar al service y a su respectivo puerto correctamente
+The docker-compose file is for quick tests
