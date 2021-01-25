@@ -9,16 +9,17 @@ spec:
   selector:
     matchLabels:
       app: my-books-database
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
-        backend-network: "true"
         app: my-books-database
     spec:
       containers:
-        - env:
+        - name: my-books-database          
+          image: aamv/my-books-mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
             - name: MYSQL_DATABASE
               value: mybooksdb
             - name: MYSQL_PASSWORD
@@ -27,29 +28,19 @@ spec:
               value: aamv
             - name: MYSQL_USER
               value: aamv
-          image: aamv/my-books-mysql:latest
           livenessProbe:
             exec:
-              command:
-                - mysqladmin
-                - ping
-                - -h
-                - localhost
+              command: ["mysqladmin", "ping", "-h", "localhost"]
             failureThreshold: 10
             timeoutSeconds: 20
-          name: my-books-database
-          ports:
-            - containerPort: 3306
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: my-books-pvc
           resources:
             limits:
               memory: "128Mi"
               cpu: "500m"
-          volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: my-db
-      restartPolicy: Always
       volumes:
-        - name: my-db
+        - name: my-books-pvc
           persistentVolumeClaim:
-            claimName: my-db
-status: {}
+            claimName: my-books-pvc

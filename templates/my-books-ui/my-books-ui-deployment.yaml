@@ -15,12 +15,7 @@ spec:
         app: my-books-ui
     spec:
       containers:
-        - image: aamv/my-books-ui:latest
-          name: my-books-ui
+        - name: my-books-ui
+          image: aamv/my-books-ui:latest
           ports:
             - containerPort: 80
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
-      restartPolicy: Always

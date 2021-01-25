@@ -5,11 +5,9 @@ metadata:
     app: my-books-database
   name: my-books-database
 spec:
+  selector:
+    app: my-books-database
   ports:
     - name: "3306"
       port: 3306
       targetPort: 3306
-  selector:
-    app: my-books-database
-status:
-  loadBalancer: {}
