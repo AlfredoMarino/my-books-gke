@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-books-ui
+  labels:
+    app: my-books-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-books-ui
+  template:
+    metadata:
+      labels:
+        app: my-books-ui
+    spec:
+      containers:
+        - name: my-books-ui
+          image: aamv/my-books-ui:latest
+          ports:
+            - containerPort: 80

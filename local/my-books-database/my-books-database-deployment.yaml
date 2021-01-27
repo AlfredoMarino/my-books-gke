@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-books-database
+  name: my-books-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-books-database
+  template:
+    metadata:
+      labels:
+        app: my-books-database
+    spec:
+      containers:
+        - name: my-books-database
+          image: aamv/my-books-mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              value: mybooksdb
+            - name: MYSQL_PASSWORD
+              value: aamv
+            - name: MYSQL_ROOT_PASSWORD
+              value: aamv
+            - name: MYSQL_USER
+              value: aamv
+          livenessProbe:
+            exec:
+              command: ["mysqladmin", "ping", "-h", "localhost"]
+            failureThreshold: 10
+            timeoutSeconds: 20
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: my-books-pvc
+          resources: {}
+      volumes:
+        - name: my-books-pvc
+          persistentVolumeClaim:
+            claimName: my-books-pvc

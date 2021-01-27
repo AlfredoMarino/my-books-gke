@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-books-service
+  name: my-books-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-books-service
+  template:
+    metadata:
+      labels:
+        app: my-books-service
+    spec:
+      containers:
+        - name: my-books-service
+          image: aamv/my-books-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: aamv
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://my-books-database:3306/mybooksdb
+            - name: SPRING_DATASOURCE_USERNAME
+              value: aamv

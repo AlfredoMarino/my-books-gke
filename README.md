@@ -5,7 +5,7 @@
 
 1. Run
 
-        kubectl apply -f templates/
+        kubectl apply -f local/ -R
 
 2. Test
 

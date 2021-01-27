@@ -15,7 +15,7 @@ spec:
         app: my-books-database
     spec:
       containers:
-        - name: my-books-database          
+        - name: my-books-database
           image: aamv/my-books-mysql:latest
           ports:
             - containerPort: 3306
@@ -36,10 +36,7 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: my-books-pvc
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+          resources: {}
       volumes:
         - name: my-books-pvc
           persistentVolumeClaim:
