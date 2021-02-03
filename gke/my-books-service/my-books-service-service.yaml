@@ -5,11 +5,9 @@ metadata:
     app: my-books-service
   name: my-books-service
 spec:
-  type: LoadBalancer
   selector:
     app: my-books-service
   ports:
-    - name: http
-      port: 8080
-      protocol: TCP
-      targetPort: 8080
+    - protocol: TCP
+      port: 80
+      targetPort: http

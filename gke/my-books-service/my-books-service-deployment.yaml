@@ -26,3 +26,4 @@ spec:
               value: jdbc:mysql://my-books-database:3306/mybooksdb
             - name: SPRING_DATASOURCE_USERNAME
               value: aamv
+          resources: {}

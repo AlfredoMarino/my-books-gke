@@ -5,12 +5,11 @@ metadata:
     app: my-books-ui
   name: my-books-ui
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: my-books-ui
   ports:
-    - name: 80-30000
-      nodePort: 30000
+    - name: http
       port: 80
       protocol: TCP
       targetPort: 80
